@@ -1,3 +1,11 @@
 console.log('привет мир');
 
-const a = '10';
+let title, 
+    screens,
+    screenPrice,
+    rollback,
+    fullPrice,
+    adaptive;
+
+
+alert('hello');
