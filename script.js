@@ -7,14 +7,10 @@ const screens = prompt('Какие типы экранов нужно разра
 const screenPrice = +prompt('Сколько будет стоить данная работа?', 12000);
 const rollback = 50;
 
-const adaptiveNeed = prompt('Нужен ли адаптив на сайте?');
-let adaptive = false;
-if (adaptiveNeed == 'да') {
-    adaptive = true;
-}
+const adaptive = confirm('Нужен ли адаптив на сайте?');
 
-console.log(adaptiveNeed);
-console.log(adaptive);
+
+console.log(`Булевое значение переменной adaptive - ${adaptive}`);
 
 const service1 = prompt('Какой дополнительный тип услуги нужен?');
 const servicePrice1 = +prompt('Сколько это будет стоить?');
@@ -24,12 +20,12 @@ const servicePrice2 = +prompt('Сколько это будет стоить?');
 const fullPrice = screenPrice + servicePrice1 + servicePrice2;
 const servicePercentPrice = Math.ceil(fullPrice - rollback);
 
-console.log(servicePercentPrice);
-console.log(typeof title);
-console.log(typeof fullPrice);
-console.log(typeof adaptive);
-console.log(screens.length);
-console.log(screenPrice + ' $');
+console.log(`Итоговая стоимость за вычетом отката посреднику ${servicePercentPrice}`);
+console.log(`Тип переменной title - ${typeof title}`);
+console.log(`Тип переменной fullPrice - ${typeof fullPrice}`);
+console.log(`Тип переменной adaptive - ${typeof adaptive}`);
+console.log(`длинна строки screens - ${screens.length}`);
+console.log(`Стоимость сайта без доп услуг - ${screenPrice} $`);
 console.log(screens.toLowerCase().split(' '));
 console.log(fullPrice * (rollback/100));
 
