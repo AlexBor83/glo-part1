@@ -7,16 +7,14 @@ let rollback = 50;
 let adaptive;
 let service1;
 let service2;
+let price;
 let allServicePrices;
 let fullPrice;
 let servicePercentPrice;
 
 const isNumber = function (num) {
-  return !isNaN(parseFloat(num) && isFinite(num));
+  return !isNaN(parseFloat(num)) && isFinite(num);
 };
-
-isNumber();
-
 
 
 const getTitle = function () {
@@ -26,53 +24,58 @@ const getTitle = function () {
   return title;
 };
 
+
 const getQuestion = function () {
   screens = prompt(
-    'Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные'
+    'Какие типы экранов нужно разработать?',
+    'Простые, Сложные, Интерактивные'
   );
   screenPrice = prompt('Сколько будет стоить данная работа?');
 
-  while (!isNumber(screenPrice)) {
+  while (!isNumber(screenPrice) || screenPrice === '0' || screenPrice === null) {
     screenPrice = prompt('Сколько будет стоить данная работа?');
   }
 
-  adaptive = confirm('Нужен ли адаптив на сайте?');  
-};
+  screenPrice = screenPrice.trim(); 
 
+  adaptive = confirm('Нужен ли адаптив на сайте?');
+};
 
 const showTypeOf = function (variable) {
   return console.log(`Значение ${variable} - ${typeof variable}`);
 };
 
-
 function getAllServicePrices() {
   let sum = 0;
   let i = 0;
   do {
-    if (i===0) {
+    if (i === 0) {
       service1 = prompt('Какой дополнительный тип услуги нужен?');
-    } else if (i===1) {
+    } else if (i === 1) {
       service2 = prompt('Какой дополнительный тип услуги нужен?');
     }
 
-    sum += +prompt('Сколько это будет стоить?');
-    i++;
+    price = prompt('Сколько это будет стоить?');
 
-  } while (i < 2);  
-  
+    while (!isNumber(price) || price === '0' || price === null) {
+      price = prompt('Сколько это будет стоить?');
+    }
+
+    price = price.trim();
+    sum += +price;
+    i++;
+  } while (i < 2);
+
   return sum;
 }
-
 
 const getFullPrice = function () {
   return +screenPrice + allServicePrices;
 };
 
-
 const getServicePercentPrices = function () {
   return Math.ceil(fullPrice - rollback);
 };
-
 
 const getRollbackMassage = function (price) {
   if (price >= 30000) {
@@ -92,14 +95,14 @@ allServicePrices = getAllServicePrices();
 fullPrice = getFullPrice();
 servicePercentPrice = getServicePercentPrices();
 
-
 showTypeOf(title);
 showTypeOf(screenPrice);
 showTypeOf(adaptive);
-
 
 console.log(`allServicePrices - ${allServicePrices}`);
 console.log(`Название сайта - ${title}`);
 console.log(`Типы необходимых экранов - ${screens}`);
 console.log(getRollbackMassage(fullPrice));
-console.log(`Общая стоимость за вычетом отката посреднику - ${getServicePercentPrices()}`);
+console.log(
+  `Общая стоимость за вычетом отката посреднику - ${getServicePercentPrices()}`
+);
