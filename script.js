@@ -20,22 +20,22 @@ const appData = {
   servicePercentPrice: 0,
 
   getTitle: function () {
-    appData.title = prompt(
-      'Как называется ваш проект?',
-      'Калькулятор верстки'
-    ).trim();
+    appData.title = prompt('Как называется ваш проект?', 'Калькулятор верстки');
 
-    while (!isString(appData.title)) {
+    while (!isString(appData.title) || appData.title.trim().length === 0) {
       appData.title = prompt(
         'Как называется ваш проект?',
         'Калькулятор верстки'
-      ).trim();
+      );
     }
 
     appData.title =
-      appData.title[0].toUpperCase() + appData.title.slice(1).toLowerCase();
+      appData.title.trim()[0].toUpperCase() +
+      appData.title.slice(1).toLowerCase();
 
-    appData.title = appData.title;
+    // appData.title = appData.title;
+
+    console.log(appData.title);
   },
 
   getQuestion: function () {
@@ -43,7 +43,7 @@ const appData = {
       let price = 0;
       let name = prompt('Какие типы экранов нужно разработать?');
 
-      while (!isString(name)) {
+      while (!isString(name) || name.trim().length === 0) {
         name = prompt('Какие типы экранов нужно разработать?');
       }
 
@@ -64,7 +64,7 @@ const appData = {
       let price = 0;
       let name = prompt('Какой дополнительный тип услуги нужен?');
 
-      while (!isString(name)) {
+      while (!isString(name) || name.trim().length === 0) {
         name = prompt('Какой дополнительный тип услуги нужен?');
       }
 
@@ -88,7 +88,7 @@ const appData = {
     // }
 
     appData.screenPrice = appData.screens.reduce(function (sum, item) {
-      return sum + +item.price;
+      return sum + (+item.price);
     }, 0);
 
     for (let key in appData.services) {
