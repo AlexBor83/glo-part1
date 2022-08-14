@@ -1,5 +1,34 @@
 'use strict';
 
+let titles = document.getElementsByTagName('h1');
+const title = titles[0];
+
+let buttons = document.getElementsByClassName('handler_btn');
+const buttonStart = buttons[0];
+const buttonReset = buttons[1];
+
+const buttonScreen = document.querySelector('.screen-btn');
+
+const itemsPercents = document.querySelectorAll('.other-items.percent');
+const itemsNumbers = document.querySelectorAll('.other-items.number');
+
+const inputRollback = document.querySelector('.rollback [type="range"]');
+const spanRollback = document.querySelector('.rollback .range-value');
+
+let inputs = document.getElementsByClassName('total-input');
+const inputTotal = inputs[0];
+const inputTotalCount = inputs[1];
+const inputTotalCountOther = inputs[2];
+const inputTotalCountFull = inputs[3];
+const inputTotalCountRollback = inputs[4];
+
+let divScreen = document.querySelectorAll('.screen');
+
+
+
+
+
+
 const isNumber = function (num) {
   return !isNaN(parseFloat(num)) && isFinite(num);
 };
@@ -136,4 +165,4 @@ const appData = {
   },
 };
 
-appData.start();
+// appData.start();
