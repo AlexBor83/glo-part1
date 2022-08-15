@@ -26,8 +26,9 @@ let screens = document.querySelectorAll('.screen');
 const appData = {
   title: '',
   screens: [],
+  countScreen: 0,
   screenPrice: 0,
-  rollback: 10,
+  rollback: 0,
   adaptive: true,
   servicesPercent: {},
   servicesNumber: {},
@@ -36,12 +37,48 @@ const appData = {
   fullPrice: 0,
   servicePercentPrice: 0,
 
+  isError: false,
+
   init: function () {
     appData.addTitle();
 
-    buttonStart.addEventListener('click', appData.start);
+    buttonStart.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      appData.checkScreens();
+    });
 
     buttonAdd.addEventListener('click', appData.addScreenBlock);
+
+    appData.addRollback();   
+  },
+
+  checkScreens: function () {
+    if (!appData.isError) {
+      appData.start();
+      console.log(appData.isError);
+    } else {
+      alert('Выберити тип экрана');
+      appData.isError = false;
+      console.log(appData.isError);
+    }
+  },
+
+  start: function () {
+    appData.addScreens();
+
+    appData.addServices();
+
+    appData.addPrice();
+
+    appData.addRollback();
+
+    console.log(appData.rollback);
+
+    // appData.getServicePercentPrices();
+    // appData.logger();
+
+    appData.showResult();
   },
 
   addTitle: function () {
@@ -50,9 +87,12 @@ const appData = {
 
   showResult: function () {
     inputTotal.value = appData.screenPrice;
+    inputTotalCount.value = appData.countScreen;
     inputTotalCountOther.value =
       appData.servicePricesPercent + appData.servicePricesNumber;
     inputTotalCountFull.value = appData.fullPrice;
+
+    inputTotalCountRollback.value = appData.servicePercentPrice;
   },
 
   addScreens: function () {
@@ -63,10 +103,23 @@ const appData = {
       const input = screen.querySelector('input');
       const selectName = select.options[select.selectedIndex].textContent;
 
+      console.log(appData.isError);
+
+      if (
+        selectName === 'Тип экранов' ||
+        input.value === 'Количество экранов' ||
+        input.value.trim() === ''
+      ) {
+        appData.isError = true;
+      }
+
+      console.log(appData.isError);
+
       appData.screens.push({
         id: i,
         name: selectName,
         price: +select.value * +input.value,
+        count: +input.value,
       });
     });
     console.log(appData.screens);
@@ -109,6 +162,10 @@ const appData = {
       return sum + +item.price;
     }, 0);
 
+    appData.countScreen = appData.screens.reduce(function (sum, item) {
+      return sum + +item.count;
+    }, 0);
+
     for (let key in appData.servicesNumber) {
       appData.servicePricesNumber += appData.servicesNumber[key];
     }
@@ -122,24 +179,23 @@ const appData = {
       +appData.screenPrice +
       appData.servicePricesNumber +
       appData.servicePricesPercent;
-  },
 
-  getServicePercentPrices: function () {
     appData.servicePercentPrice = Math.ceil(
       appData.fullPrice - appData.fullPrice * (appData.rollback / 100)
     );
   },
 
-  getRollbackMassage: function (price) {
-    if (price >= 30000) {
-      return 'Даем скидку в 10%';
-    } else if (price < 30000 && price > 15000) {
-      return 'Даем скидку в 5%';
-    } else if (price <= 15000 && price >= 0) {
-      return 'Скидка не предусмотрена';
-    } else {
-      return 'Что то пошло не так';
-    }
+  addRollback: function () {
+    inputRollback.addEventListener('input', function (e) {
+      spanRollback.textContent = e.target.value;
+      appData.rollback = spanRollback.textContent;
+    });
+
+    inputRollback.addEventListener('change', function (e) {
+      appData.rollback = +e.target.value;
+      appData.rollback = spanRollback.textContent;
+      console.log(appData.rollback);
+    });
   },
 
   logger: function () {
@@ -148,19 +204,6 @@ const appData = {
     console.log(
       `Общая стоимость за вычетом отката посреднику - ${appData.servicePercentPrice}`
     );
-  },
-
-  start: function () {
-    console.log('start');
-    appData.addScreens();
-    appData.addServices();
-
-    appData.addPrice();
-
-    // appData.getServicePercentPrices();
-    // appData.logger();
-
-    appData.showResult();
   },
 };
 
