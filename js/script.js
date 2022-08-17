@@ -43,7 +43,7 @@ const appData = {
     appData.addTitle();
     appData.checkScreens();
 
-    buttonStart.addEventListener('click', function (e) {
+    buttonStart.addEventListener('click', (e) => {
       e.preventDefault();
       appData.checkScreens();
     });
@@ -57,7 +57,7 @@ const appData = {
     screens = document.querySelectorAll('.screen');
     appData.isError = false;
 
-    screens.forEach(function (screen) {
+    screens.forEach( (screen) => {
       const select = screen.querySelector('select');
       const input = screen.querySelector('input');
 
@@ -101,7 +101,7 @@ const appData = {
   addScreens: function () {
     screens = document.querySelectorAll('.screen');
 
-    screens.forEach(function (screen, i) {
+    screens.forEach( (screen, i) => {
       const select = screen.querySelector('select');
       const input = screen.querySelector('input');
       const selectName = select.options[select.selectedIndex].textContent;
@@ -123,7 +123,7 @@ const appData = {
   },
 
   addServices: function () {
-    itemsPercents.forEach(function (item) {
+    itemsPercents.forEach((item) => {
       const check = item.querySelector('input[type=checkbox]');
       const label = item.querySelector('label');
       const input = item.querySelector('input[type=text]');
@@ -133,7 +133,7 @@ const appData = {
       }
     });
 
-    itemsNumbers.forEach(function (item) {
+    itemsNumbers.forEach((item) => {
       const check = item.querySelector('input[type=checkbox]');
       const label = item.querySelector('label');
       const input = item.querySelector('input[type=text]');
@@ -145,11 +145,11 @@ const appData = {
   },
 
   addPrice: function () {
-    appData.screenPrice = appData.screens.reduce(function (sum, item) {
+    appData.screenPrice = appData.screens.reduce((sum, item) => {
       return sum + item.price;
     }, 0);
 
-    appData.countScreen = appData.screens.reduce(function (sum, item) {
+    appData.countScreen = appData.screens.reduce((sum, item) => {
       return sum + item.count;
     }, 0);
 
@@ -169,12 +169,12 @@ const appData = {
   },
 
   addRollback: function () {
-    inputRollback.addEventListener('input', function (e) {
+    inputRollback.addEventListener('input', (e) => {
       spanRollback.textContent = e.target.value;
       appData.rollback = spanRollback.textContent;
     });
 
-    inputRollback.addEventListener('change', function (e) {
+    inputRollback.addEventListener('change', (e) => {
       appData.rollback = +e.target.value;
       appData.rollback = spanRollback.textContent;
     });
