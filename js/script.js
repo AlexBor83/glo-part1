@@ -37,7 +37,6 @@ const appData = {
   servicePricesNumber: 0,
   fullPrice: 0,
   servicePercentPrice: 0,
-
   isError: false,
 
   init: function () {
@@ -52,7 +51,6 @@ const appData = {
     buttonAdd.addEventListener('click', this.addScreenBlock);
 
     this.addRollback();
-
     this.reset();
   },
 
@@ -204,6 +202,7 @@ const appData = {
     });
 
     buttonAdd.disabled = true;
+    inputRollback.disabled = true;
 
     buttonStart.style.display = 'none';
     buttonReset.style.display = 'flex';
@@ -215,6 +214,7 @@ const appData = {
       buttonStart.style.display = 'flex';
       buttonReset.style.display = 'none';
       buttonAdd.disabled = false;
+      inputRollback.disabled = false;
 
       this.activeInput();
       this.clearScreens();
@@ -228,8 +228,7 @@ const appData = {
       inputCheak.checked = false;
       
       inputs.forEach((input) => {
-        input.value = 0;
-        
+        input.value = 0;        
       });
     });
   },
@@ -251,7 +250,10 @@ const appData = {
       select.disabled = false;
       select.value = '';
       input.disabled = false;
-      input.value = '';    
+      input.value = '';
+
+      inputRollback.value = 0;
+      spanRollback.textContent = inputRollback.value;
   },
 
   logger: function () {
